@@ -1,22 +1,9 @@
-use std::{
-    env,
-    fs::{self, read_to_string},
-    io::Read,
-};
-
 use day2::Line;
 
 fn main() -> Result<(), std::io::Error> {
-    let args: Vec<String> = env::args().collect();
+    let input = util::load_data()?;
 
-    let default_file_name = "input.txt".to_string();
-
-    let file_name = args.get(1).unwrap_or(&default_file_name);
-
-    let mut input = String::new();
-    fs::File::open(file_name)?.read_to_string(&mut input)?;
-
-    let lines: Vec<Line> = input.split('\n').map(parseLine).collect();
+    let lines: Vec<Line> = input.split('\n').map(parse_line).collect();
 
     println!("there are {} lines", lines.len());
 
@@ -26,7 +13,7 @@ fn main() -> Result<(), std::io::Error> {
     Ok(())
 }
 
-fn parseLine(line: &str) -> Line {
+fn parse_line(line: &str) -> Line {
     let (lb_str, rest) = line.split_once('-').expect("no - found");
 
     let (ub_str, rest) = rest.split_once(' ').expect("No space found!");
