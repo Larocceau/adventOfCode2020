@@ -1,4 +1,7 @@
-use std::{env, fs, io::{Error, Read}};
+use std::{
+    env, fs,
+    io::{Error, Read},
+};
 
 pub fn load_data() -> Result<String, Error> {
     let args: Vec<String> = env::args().collect();
@@ -10,4 +13,20 @@ pub fn load_data() -> Result<String, Error> {
     let mut input = String::new();
     fs::File::open(file_name)?.read_to_string(&mut input)?;
     Ok(input)
+}
+
+pub mod option {
+
+    pub fn contains<T: PartialEq>(option: &Option<&T>, expected: &T) -> bool {
+        match option {
+            Some(v) => {
+                if **v == *expected {
+                    true
+                } else {
+                    false
+                }
+            }
+            None => false,
+        }
+    }
 }
