@@ -1,26 +1,33 @@
+use std::fmt::Debug;
+
 pub fn tree_at(map: &Vec<Vec<char>>, x: &usize, y: &usize) -> bool {
     let row = &map[*y];
     row[x % row.len()] == '#'
 }
 
-pub fn points(dx: &usize, map_height: &usize) -> Vec<(usize, usize)> {
+pub fn points(dx: &usize, dy: &usize, map_height: &usize) -> Vec<(usize, usize)> {
     let mut points = Vec::new();
     let mut y = 0;
 
     while y < *map_height {
-        points.push((y * dx, y));
-        y += 1;
+        points.push((y * dx / dy, y));
+        y += dy;
     }
-
-    println!("points: {points:?}");
     points
 }
 
-pub fn solve_part_1(map: &Vec<Vec<char>>, dx: &usize) {
-    let trees = points(dx, &map.len())
+fn count_trees_on_path(dx: &usize, dy: &usize, map: &Vec<Vec<char>>) -> usize {
+    points(dx, dy, &map.len())
         .iter()
         .filter(|(x, y)| tree_at(map, x, y))
-        .count();
+        .count()
+}
 
-    println!("You will pass {trees} trees")
+pub fn solve(map: &Vec<Vec<char>>, paths: &Vec<(usize, usize)>) {
+    let finalValue = paths
+        .iter()
+        .map(|(dx, dy)| count_trees_on_path(dx, dy, map))
+        .fold(1, |a, b| a * b);
+
+    println!("The product of all trees you pass is {finalValue}")
 }

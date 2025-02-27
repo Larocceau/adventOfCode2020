@@ -10,7 +10,8 @@ fn main() -> Result<(), Error> {
 
     print!("the map is {map:?}");
 
-    day3::solve_part_1(&map, &3);
+    day3::solve(&map, &vec![(3, 1)]);
+    day3::solve(&map, &vec![(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]);
 
     Ok(())
 }
