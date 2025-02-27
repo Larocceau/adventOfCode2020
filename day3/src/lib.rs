@@ -24,10 +24,10 @@ fn count_trees_on_path(dx: &usize, dy: &usize, map: &Vec<Vec<char>>) -> usize {
 }
 
 pub fn solve(map: &Vec<Vec<char>>, paths: &Vec<(usize, usize)>) {
-    let finalValue = paths
+    let final_value = paths
         .iter()
         .map(|(dx, dy)| count_trees_on_path(dx, dy, map))
         .fold(1, |a, b| a * b);
 
-    println!("The product of all trees you pass is {finalValue}")
+    println!("The product of all trees you pass is {final_value}")
 }
