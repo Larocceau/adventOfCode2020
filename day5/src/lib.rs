@@ -61,7 +61,7 @@ pub fn solve(data: &str) -> Result<(), String> {
     for (index, seat_id) in seat_ids.iter().enumerate() {
         let next = seat_ids.get(index + 1);
 
-        if util::option::contains(&next, &(seat_id + 2)) {
+        if util::option::contains(&next, &&(seat_id + 2)) {
             my_seat = Some(seat_id + 1);
             break;
         }
