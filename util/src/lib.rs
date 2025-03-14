@@ -17,10 +17,10 @@ pub fn load_data() -> Result<String, Error> {
 
 pub mod option {
 
-    pub fn contains<T: PartialEq>(option: &Option<T>, expected: &T) -> bool {
+    pub fn contains<T: PartialEq>(option: &Option<&T>, expected: &T) -> bool {
         match option {
             Some(v) => {
-                if v == expected {
+                if **v == *expected {
                     true
                 } else {
                     false
@@ -30,3 +30,5 @@ pub mod option {
         }
     }
 }
+
+
