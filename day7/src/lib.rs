@@ -13,12 +13,26 @@ pub fn contains_shiny_gold(bag: &str, map: &HashMap<&str, Vec<(&str, u32)>>) -> 
     }
 }
 
-pub fn solve_part_1(data: &str) {
-    let map: HashMap<&str, Vec<(&str, u32)>> = data.split("\n").map(parse).collect();
+pub fn count_inner_bags(bag: &str, map: &HashMap<&str, Vec<(&str, u32)>>) -> u32 {
+    let mut total = 0;
 
-    let sg = map.keys().filter(|bag| contains_shiny_gold(bag, &map));
+    for (bag, count) in map.get(bag).expect("That really should exist") {
+        println!("Now counting {bag}");
+        total += count * (count_inner_bags(bag, map) + 1);
+    }
+    total
+}
 
-    println!("there are {} bags containing shiny gold", sg.count())
+pub fn solve_part_1(data: &HashMap<&str, Vec<(&str, u32)>>) {
+    let sg = data.keys().filter(|bag| contains_shiny_gold(bag, &data));
+
+    println!("there are {} bags containing shiny gold", sg.count() + 1)
+}
+
+pub fn solve_part_2(data: &HashMap<&str, Vec<(&str, u32)>>) {
+    let bags_in_shiny_gold = count_inner_bags("shiny gold", data);
+
+    println!("a shiny gold bag contains {bags_in_shiny_gold} bags");
 }
 
 pub fn parse<'a>(input: &'a str) -> (&'a str, Vec<(&'a str, u32)>) {
