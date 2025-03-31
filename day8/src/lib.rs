@@ -50,17 +50,18 @@ fn rewrite_last_rewriteable(stack: &mut Vec<ComputationState>, rewritten: Option
         None => ()
     }
 
-    
-    match last.instruction {
-        Instruction::Acc(_) => rewrite_last_rewriteable(stack, None),
-        last_instruction => {
+    let new_instruction =
+        match last.instruction {
+            Instruction::Acc(_) => None,
+            Instruction::Nop(v) => Some(Instruction::Jmp(v)),
+            Instruction::Jmp(v) => Some(Instruction::Nop(v)),
+        };
+
+    match new_instruction {
+        None => rewrite_last_rewriteable(stack, None),
+        Some(instruction) => {
             let stack_state = stack.last().expect("unwound to bottom of stack");
 
-            let instruction = match last_instruction {
-                Instruction::Nop(v) => Instruction::Jmp(v),
-                Instruction::Jmp(v) => Instruction::Nop(v),
-                Instruction::Acc(_) => panic!("unexpected match on acc"),
-            };
             let (acc, index) =
                 handle_instruction(&stack_state.acc, &stack_state.index, &instruction);
             
@@ -98,7 +99,6 @@ pub fn solve_part_2(instructions: &Vec<Instruction>) {
             .find(|cs| cs.index == last.index && cs.id != last.id)
             .is_some()
         {
-    
             rewritten = Some(rewrite_last_rewriteable(&mut stack, rewritten));
             println!("unwound to {}", stack.len());
         } else {
