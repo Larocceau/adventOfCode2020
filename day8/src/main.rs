@@ -4,4 +4,5 @@ fn main() {
     let parsed: Vec<day8::Instruction> = data.split('\n').map(day8::Instruction::parse).collect();
 
     day8::solve_part_1(&parsed);
+    day8::solve_part_2(&parsed);
 }
