@@ -30,15 +30,15 @@ pub fn solve_part_2(chargers: &[usize]) -> usize {
 
 
 fn no_of_routes(chargers: &[usize],start_value: &usize, target_value: &usize) -> usize {
-    let memo = RefCell::new(HashMap::new());
+    let mut memo = HashMap::new();
 
-    no_of_routes_memo(chargers, start_value, target_value, &memo)
+    no_of_routes_memo(chargers, start_value, target_value, &mut memo)
 }
 
 
-fn no_of_routes_memo(chargers: &[usize], start_value: &usize, target_value: &usize, memo: &RefCell<HashMap<(Vec<usize>, usize, usize), usize>>) -> usize {
+fn no_of_routes_memo(chargers: &[usize], start_value: &usize, target_value: &usize, memo: &mut HashMap<(Vec<usize>, usize, usize), usize>) -> usize {
     let key = (chargers.to_vec(), *start_value, *target_value);
-    if let Some(res) = memo.borrow().get(&key){
+    if let Some(res) = memo.get(&key){
         *res
     } else {
         let next: usize= 
@@ -57,7 +57,7 @@ fn no_of_routes_memo(chargers: &[usize], start_value: &usize, target_value: &usi
     
         let res = next + (if can_finish {1} else {0});
 
-        memo.borrow_mut().insert(key, res);
+        memo.insert(key, res);
         res
 
     }
