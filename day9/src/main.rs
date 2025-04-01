@@ -1,4 +1,3 @@
-use day9::to_encryption_weakness;
 
 fn main() {
     let data: Vec<usize> = util::load_data().unwrap().split_ascii_whitespace().map(|v| v.parse::<usize>().unwrap()).collect();

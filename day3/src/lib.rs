@@ -1,4 +1,3 @@
-use std::fmt::Debug;
 
 pub fn tree_at(map: &Vec<Vec<char>>, x: &usize, y: &usize) -> bool {
     let row = &map[*y];

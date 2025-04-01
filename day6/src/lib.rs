@@ -1,5 +1,4 @@
-use std::collections::{HashMap, hash_map};
-use std::iter::Map;
+use std::collections::HashMap;
 
 fn answered_questions(input: &str) -> usize {
     let mut vec: Vec<_> = input.chars().filter(|c| c.is_alphabetic()).collect();

@@ -6,7 +6,7 @@ fn has_matching_numbers(source: &[usize], target: usize) -> bool {
     let map: HashSet<&usize> = source.iter().collect();
 
     for item in source {
-        if let (Some (complementary)) = target.checked_sub(*item) {
+        if let Some (complementary) = target.checked_sub(*item) {
             if map.contains(&complementary) {
     
                 if complementary == *item {
