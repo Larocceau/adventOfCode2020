@@ -1,5 +1,8 @@
 use std::{
-    collections::HashMap, env, fs, hash::Hash, io::{Error, Read}
+    collections::HashMap,
+    env, fs,
+    hash::Hash,
+    io::{Error, Read},
 };
 
 pub fn load_data() -> Result<String, Error> {
@@ -14,9 +17,8 @@ pub fn load_data() -> Result<String, Error> {
     Ok(input)
 }
 
-
 /// Returns a hashmap with every item, and the number of occurrences
-/// 
+///
 /// # Examples
 ///
 /// ```
@@ -28,22 +30,23 @@ pub fn load_data() -> Result<String, Error> {
 /// assert_eq!(*apple_count, 2);
 /// assert_eq!(*pear_count, 1);
 /// ```
-pub fn count_by<'a, A, B> (data: &'a [A], f: impl Fn(&A) -> B) -> HashMap<B, u32>
-    where B: Hash + Eq {
-        let mut counts = HashMap::<B, u32>::new();
+pub fn count_by<'a, A, B>(data: &'a [A], f: impl Fn(&A) -> B) -> HashMap<B, u32>
+where
+    B: Hash + Eq,
+{
+    let mut counts = HashMap::<B, u32>::new();
 
-        for item in data {
-            let key = f(item);
-            if let Some(count) = counts.get_mut(&key) {
-                *count += 1;
-            } else {
-                counts.insert(key, 1);
-            }
+    for item in data {
+        let key = f(item);
+        if let Some(count) = counts.get_mut(&key) {
+            *count += 1;
+        } else {
+            counts.insert(key, 1);
         }
+    }
 
-        counts
+    counts
 }
-
 
 pub mod option {
 
@@ -59,6 +62,20 @@ pub mod option {
             None => false,
         }
     }
+
+    pub fn traverse<T, I>(iter: I) -> Option<Vec<T>>
+    where
+        I: Iterator<Item = Option<T>>,
+    {
+        let mut collected = Vec::new();
+
+        for item in iter {
+            match item {
+                Some(value) => collected.push(value),
+                None => return None,
+            }
+        }
+
+        Some(collected)
+    }
 }
-
-
